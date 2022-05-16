@@ -10,6 +10,7 @@ public class ReplyDto {
 	private int id;
 	private int boardId;
 	private String replyWriter;
+	private String content;
 	private LocalDateTime inserted;
 	private int likeCheck;
 	private int likehits;

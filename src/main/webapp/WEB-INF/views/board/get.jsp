@@ -14,35 +14,80 @@
 </head>
 <body>
 	<t:navBar path="get" />
-		<h1>${board.id }번 게시물</h1>
-		
-		<form action="${appRoot }/board/get/${board.id }" method="post">
+	<h1>${board.id }번게시물</h1>
+
+	<form action="${appRoot }/board/modify" method="post">
 		<input type="hidden" name="id" value="${board.id }" />
-		
-			<div class="d-flex justify-content-center mb-3">
-				<!-- <label for="input1" class="form-label">제목</label> -->
-				<input type="text" class="form-control" name="title" id="input1" required
-					value="${board.title }" readonly />
-			</div>
-			
-			<div class="d-flex justify-content-end">
-				<label for="input2" class="form-label">작성일</label>
-				<input type="datetime-local" class="form-control" name="title" id="input2" 
-					value="${board.inserted }" />
-			</div>
-			
-			<div class="d-flex justify-content-center mb-3">
-				<label for="textarea1" class="form-label">본문</label>
-				<textarea class="form-control" id="textarea1">${board.body }</textarea>
-			</div>
-			
-			<div class="d-flex justify-content-end" >
-				<button id="modify-submit1" class="btn btn-success">수정</button>
-				<button id="modify-submit1" class="btn btn-success">삭제</button>
+
+		<div class="d-flex justify-content-center mb-3">
+			<!-- <label for="input1" class="form-label">제목</label> -->
+			<input type="text" class="form-control" name="title"
+				value="${board.title }" />
 		</div>
 
+		<br />
+
+		<div class="d-flex justify-content-center mb-3">
+			<label for="textarea1" class="form-label">본문</label>
+			<textarea class="form-control" name="body">${board.body }</textarea>
+		</div>
+
+		<br />
+
+		<div class="d-flex justify-content-end">
+			<label for="input2" class="form-label">작성일</label>
+			<input type="datetime-local" value="${board.inserted }" readonly />
+		</div>
+
+		<br />
+
+		<button id="modify-submit1" class="btn btn-success">수정</button>
+	</form>
+
+	<form action="${appRoot }/board/remove" method="post">
+		<input type="hidden" name="id" value="${board.id }" />
+		<button id="remove-submit1" class="btn btn-success">삭제</button>
+	</form>
+
+	<hr />
+
+	<%-- 댓글 추가 form --%>
+	<!-- .container.mt-3>.row>.col>form -->
+	<div class="container mt-3">
+		<div class="row">
+			<div class="col">
+				<form action="${appRoot }/board/reply/insert" method="post">
+					<div class="input-group">
+						<input type="hidden" name="boardId" value="${board.id }" />
+						<input class="form-control" type="text" name="content"
+							required />
+						<button class="btn btn-outline-secondary">
+							<i class="fa-solid fa-comment-dots"></i>
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<c:forEach items="${replyList }" var="reply">
+		<div class="d-flex justify-content-center mb-3">
+			${reply.inserted } :
+
+			<input type="text" class="form-control" name="content" id="input1"
+				value="${reply.content }" />
+		</div>
+	</c:forEach>
+
+	<!-- reply 삭제 form -->
+	<div class="d-none">
+		<form id="replyDeleteForm1" action="${appRoot }/board/reply/remove"
+			method="post">
+			<input id="replyDeleteInput1" type="text" name="id" />
+			<input type="text" name="boardId" value="${board.id }" />
 		</form>
 
+	</div>
 
 </body>
 </html>

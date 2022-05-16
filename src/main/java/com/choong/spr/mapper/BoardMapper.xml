@@ -9,17 +9,29 @@
 		SELECT id, title, body, inserted, Writer, Hits 
 		FROM Board ORDER BY id;
 	</select>
-
+	
 	<insert id="insertBoard" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
 		INSERT INTO Board (title, writer, body, inserted)
 		VALUES (#{title}, #{writer}, #{body}, #{inserted})
 	</insert>
-	
+
 	<select id="getBoard" resultType="com.choong.spr.domain.BoardDto">
 		SELECT id, title, body, inserted, Writer, Hits
 		FROM Board
 		WHERE id = #{id}
 	</select>
 	
+	<update id="updateBoard">
+		UPDATE Board
+		SET title = #{title },
+			body = #{body }
+		WHERE id = #{id }
+	</update>
+	
+	<delete id="deleteBoard">
+		DELETE FROM Board
+		WHERE id = #{id}
+	</delete>
+
 
 </mapper>

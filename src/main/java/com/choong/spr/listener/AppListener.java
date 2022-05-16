@@ -1,4 +1,4 @@
-package com.choog.spr.listener;
+package com.choong.spr.listener;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;

@@ -14,5 +14,8 @@ public class BoardDto {
 	private String writer;
 	private int hits;
 	
+	private int numOfReply;
+	
+	private String searchKey;
 
 }

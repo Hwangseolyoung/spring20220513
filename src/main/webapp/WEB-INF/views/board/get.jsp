@@ -14,13 +14,19 @@
 </head>
 <body>
 	<t:navBar path="get" />
+	
+	<div class="border-success border-3 opacity-75">
+  <hr>
+</div>
+
+	<div class="container">
 	<h1>${board.id }번게시물</h1>
 
 	<form action="${appRoot }/board/modify" method="post">
 		<input type="hidden" name="id" value="${board.id }" />
 
 		<div class="d-flex justify-content-center mb-3">
-			<!-- <label for="input1" class="form-label">제목</label> -->
+		<label for="input1" class="form-label">제목</label>
 			<input type="text" class="form-control" name="title"
 				value="${board.title }" />
 		</div>
@@ -88,6 +94,6 @@
 		</form>
 
 	</div>
-
+</div>
 </body>
 </html>

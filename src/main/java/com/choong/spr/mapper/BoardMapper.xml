@@ -6,8 +6,16 @@
 <mapper namespace="com.choong.spr.mapper.BoardMapper">
 	
 	<select id="selectBoard" resultType="com.choong.spr.domain.BoardDto">
-		SELECT id, title, body, inserted, Writer, Hits 
-		FROM Board ORDER BY id;
+		SELECT b.id, 
+			   b.title, 
+			   b.body, 
+			   b.inserted, 
+			   b.Writer, 
+			   b.Hits,
+			   COUNT(r.id) numOfRply 
+		FROM Board b LEFT JOIN Reply r ON b.id = r.board_id
+		GROUP BY b.id
+		ORDER BY id DESC;
 	</select>
 	
 	<insert id="insertBoard" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
@@ -33,5 +41,30 @@
 		WHERE id = #{id}
 	</delete>
 
+	<select id="selectSearchBoard" resultType="com.choong.spr.domain.BoardDto" >
+	     SELECT b.id, 
+	            b.title, 
+	            b.body,
+	            b.inserted, 
+	            b.Writer, 
+	            b.Hits,
+	            COUNT(r.id) numOfRply 
+	      FROM Board b LEFT JOIN Reply r ON b.id = r.board_id
+	      WHERE 1=1 
+	      <choose>
+		    <when test="searchKey == 'title'">
+		      AND title LIKE CONCAT('%', '#{board.searchKey}', '%')
+		    </when>
+		    <when test="searchKey == 'writer'">
+		      AND writer LIKE CONCAT('%', '#{board.searchKey}', '%')
+		    </when>
+		  </choose>
+	      GROUP BY b.id
+   </select>
+   
+   <select id="countBoard" resultType="com.choong.spr.domain.BoardDto">
+		SELECT Count(id)
+		FROM Board   
+   </select>
 
 </mapper>

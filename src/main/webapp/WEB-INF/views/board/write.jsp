@@ -13,6 +13,13 @@
 </head>
 <body>
 	<t:navBar path="write" />
+	
+		<div class="border-success border-3 opacity-75">
+  <hr>
+</div>
+	
+	
+	<div class="container">
 	<form action="${appRoot }/board/write" method="post" >
 	
 		<div class="d-flex justify-content-center mb-3">
@@ -21,7 +28,7 @@
 		</div>
 		
 		<div class="d-flex justify-content-center mb-3">
-			<label for="input2" class="form-label">작성자</label><br/>
+			<label for="input2" class="form-label">작성자</label><hr/>
 			<input type="text" class="form-control" name="writer" id="input2" />
 		</div>
 	
@@ -35,5 +42,6 @@
 		</div>
 
 	</form>
+	</div>
 </body>
 </html>

@@ -52,4 +52,20 @@ public class BoardService {
 	}
 
 
+	public List<BoardDto> listBoardPage(int page, int countPage) {
+		int from = (page -1) * countPage;
+		return mapper.listBoardPage(page, countPage);
+	}
+
+	public int countBoard() {
+		return mapper.countBoard();
+	}
+
+	public List<BoardDto> searchBoard(BoardDto board, String searchKey) {
+		
+		return mapper.selectSearchBoard(board, searchKey);
+	}
+
+
+
 }

@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.choong.spr.domain.BoardDto;
+import com.choong.spr.domain.Criteria;
+import com.choong.spr.domain.PageDto;
 import com.choong.spr.domain.PaginationDto;
 import com.choong.spr.domain.ReplyDto;
 import com.choong.spr.service.BoardService;
@@ -101,38 +103,47 @@ public class BoardController {
 	}
 	
 	// 게시물 검색
-	@PostMapping("search")
-	public String searchBoard(@RequestParam("searchKey") String searchKey, BoardDto board, Model model) {
-		
-		List<BoardDto> list = service.searchBoard(board, searchKey);
+	@GetMapping("search")
+	public String searchBoard(@RequestParam("searchKey") String searchKey, @RequestParam("searchBoard") String searchBoard, Model model) {
+		List<BoardDto> list = service.searchBoard(searchBoard, searchKey);
 		
 		model.addAttribute("searchKey", searchKey);
-		model.addAttribute("board", list);
+		model.addAttribute("boardList", list);
 		
-		System.out.println(board);
 		return "board/list";
 	}
 	
 	// 게시물 페이징 처리
 	@GetMapping("page")
 	public void paginationBoard(@RequestParam(name="page", defaultValue = "1") int page, Model model) {
-		int countPage = 5;
+		int countPage = 20;
 		
 		List<BoardDto> list = service.listBoardPage(page, countPage);
 		
+		// 총 갯수
 		int totalRecords = service.countBoard();
+		int startPage = (page - 1) * 10;
+		int endPage = page + 9;
 		
-		int end = (totalRecords - 1) / countPage + 1;
+		
+		int prev = startPage - 3;
+		int next = startPage + 3;
 		
 		PaginationDto pageInfo = new PaginationDto();
 		pageInfo.setCurrent(page);
-		pageInfo.setEnd(end);
+		pageInfo.setPageNum(countPage);
+		pageInfo.setstartPage(startPage);
+		pageInfo.setEndPage(endPage);
 		pageInfo.setTotalRecords(totalRecords);
+		pageInfo.setPrev(prev);
+		pageInfo.setNext(next);
 		
 		model.addAttribute("board", list);
 		model.addAttribute("pageInfo", pageInfo);
 		
 		
 	}
+	
+
 
 }

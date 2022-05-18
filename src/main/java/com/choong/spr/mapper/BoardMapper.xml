@@ -12,10 +12,10 @@
 			   b.inserted, 
 			   b.Writer, 
 			   b.Hits,
-			   COUNT(r.id) numOfRply 
+			   COUNT(r.id) numOfReply 
 		FROM Board b LEFT JOIN Reply r ON b.id = r.board_id
 		GROUP BY b.id
-		ORDER BY id DESC;
+		ORDER BY inserted DESC
 	</select>
 	
 	<insert id="insertBoard" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
@@ -48,23 +48,31 @@
 	            b.inserted, 
 	            b.Writer, 
 	            b.Hits,
-	            COUNT(r.id) numOfRply 
+	            COUNT(r.id) numOfReply 
 	      FROM Board b LEFT JOIN Reply r ON b.id = r.board_id
 	      WHERE 1=1 
 	      <choose>
-		    <when test="searchKey == 'title'">
-		      AND title LIKE CONCAT('%', '#{board.searchKey}', '%')
+		    <when test="searchBoard == 'title'">
+		      AND title LIKE CONCAT('%', #{searchKey}, '%')
 		    </when>
-		    <when test="searchKey == 'writer'">
-		      AND writer LIKE CONCAT('%', '#{board.searchKey}', '%')
+		    <when test="searchBoard == 'writer'">
+		      AND writer LIKE CONCAT('%', #{searchKey}, '%')
 		    </when>
 		  </choose>
 	      GROUP BY b.id
+	      ORDER BY inserted DESC
    </select>
    
    <select id="countBoard" resultType="com.choong.spr.domain.BoardDto">
 		SELECT Count(id)
 		FROM Board   
+   </select>
+   
+   <select id="listBoardPage" resultType="com.choong.spr.domain.BoardDto">
+   		SELECT id, title, body, inserted, Writer, Hits
+   		FROM Board
+   		LIMIT 1, 20
+   		ORDER BY inserted DESC
    </select>
 
 </mapper>

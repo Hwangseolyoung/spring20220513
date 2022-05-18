@@ -2,31 +2,29 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ attribute name="path"%>
 
-<div>
 <nav aria-label="Page navigation example">
- <ul class="pagination justify-content-center">
+	<ul class="pagination justify-content-center">
 
-		<li class="page-item">
-			<a class="page-link" href="#" aria-label="Previous">
-				<span aria-hidden="true">&laquo;</span>
-			</a>
-		</li>
-
-		<c:forEach begin="${pageInfo.left }" end="${pageInfo.right }"
-			var="pageNum">
-			<c:url value="${path }" var="link">
-				<c:param name="page" value="${pageNum }"></c:param>
-			</c:url>
-			<li class="page-item ${pageInfo.current == pageNum ? 'activ' : ''}">
-				<a class="page-link" href="${link }">${pageNum }</a>
-			</li>
-			
+		<c:if test="${pageInfo.prev >= 1 }">
 			<li class="page-item">
-				<a class="page-link" href="#" aria-label="Next">
-					<span aria-hidden="true">&raquo;</span>
+				<a class="page-link"
+					href="${appRoot }/boar/list/page${pageInfo.prev }">
+					<span>&laquo;</span>
 				</a>
 			</li>
+		</c:if>
+		<c:forEach begin="${pageInfo.startPage }" end="${pageInfo.endPage }" var="pageNum">
+			<li class="page-item ${pageNum == pageInfo.current ? 'active' : '' }">
+				<a href="${appRoot }/boar/list/page${page }"
+					class="page-link">${pageNum }</a>
+			</li>
 		</c:forEach>
+		<c:if test="${pageInfo.endPage }">
+			<li class="page-item">
+				<a class="page-link" href="${appRoot }/boar/list/page${pageInfo.next }">
+					<span>&raquo;</span>
+				</a>
+			</li>
+		</c:if>
 	</ul>
-	</nav>
-</div>
+</nav>

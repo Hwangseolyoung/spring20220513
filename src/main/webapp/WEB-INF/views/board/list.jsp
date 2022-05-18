@@ -22,33 +22,30 @@
 <body>
 	<t:navBar path="list" />
 	
-		<div class="border-success border-8 opacity-75">
-  <hr>
-</div>
-	<div class="container"><h1>게시판 목록</h1></div>
+		
+	<div class="container"><h1 class="text-center">게시판 목록</h1></div>
 	
-	<div class="container">
-		<li class="nav-item">
-			<form action="${appRoot }/board/search" method="post">
+	<div class="container d-flex flex-row-reverse">
+			<form action="${appRoot }/board/search" method="get">
 				<select name="searchBoard" id="">
 					<option value="title">제목</option>
 					<option value="writer">작성자</option>
 				</select>
-				<a class="nav-link disabled">
-					<i class="fa-solid fa-magnifying-glass"></i>
-				</a>
-				<input class="form-control me-2" type="text" name="searchKey">
-				<button class="btn btn-outline-success" type="submit">검색</button>
+				
+				<input type="text" name="searchKey" placeholder="검색어를 입력하세요">
+				<button class="btn btn-outline-success" type="submit">
+				<i class="fa-solid fa-magnifying-glass"></i>
+				</button>
+				
 			</form>
 
-		</li>
 	</div>
 
 
-	<div class="container">
+	<div class="container shadow-none p-3 mb-5 bg-light rounded">
 		<table class="table table-hover caption-top">
 			<caption>게시물을 선택해보세요</caption>
-			<thead class="table-light">
+			<thead class="table-light text-center">
 				<tr>
 					<th scope="col">No</th>
 					<th scope="col">제목</th>
@@ -57,14 +54,14 @@
 					<th scope="col">조회수</th>
 				</tr>
 			</thead>
-			<tbody>
+			<tbody class="text-center">
 				<c:forEach items="${boardList }" var="board">
 					<tr>
 						<th scope="row">${board.id}</th>
 						<td>
 							<a href="${appRoot}/board/get/${board.id}">${board.title }</a>
 							<c:if test="${board.numOfReply > 0 }">
-								<span> ${board.numOfReply } </span>
+								(${board.numOfReply })
 							</c:if>
 						</td>
 						<td>${board.writer }</td>

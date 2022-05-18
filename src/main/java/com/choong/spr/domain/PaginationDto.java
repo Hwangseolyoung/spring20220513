@@ -8,17 +8,17 @@ public class PaginationDto {
 	// 한 페이지당 게시되는 게시물 수 
 	private int countPage;
 	// 페이지 리스트에 게시되는 페이지수
-	private int pageSize;
+	private int pageNum;
 	// 전체 게시물수
 	private int totalRecords;
 	// 첫 페이지 번호
-	private int first;
+	private int startPage;
 	// 페이지 왼쪽
 	private int left;
 	// 페이지 오른쪽
 	private int right;
 	// 페이지 마지막
-	private int end;
+	private int endPage;
 	// 이전 버튼
 	private int prev;
 	// 다음 버튼 
@@ -40,12 +40,12 @@ public class PaginationDto {
 		this.countPage = countPage;
 	}
 	
-	public int getPageSize() {
-		return pageSize;
+	public int getPageNum() {
+		return pageNum;
 	}
 	
-	public void setPageSize(int pageSize) {
-		this.pageSize = pageSize;
+	public void setPageNum(int pageNum) {
+		this.pageNum = pageNum;
 	}
 	
 	public int getTotalRecords() {
@@ -56,16 +56,16 @@ public class PaginationDto {
 		this.totalRecords = totalRecords;
 	}
 	
-	public int getFirst() {
-		return first = 1;
+	public int getstartPage() {
+		return startPage;
 	}
 	
-	public void setFirst(int first) {
-		this.first = 1;
+	public void setstartPage(int startPage) {
+		this.startPage = startPage;
 	}
 	
 	public int getLeft() {
-		return Math.max(current - 3, first);
+		return Math.max(current - 3, startPage);
 	}
 	
 	public void setLeft(int left) {
@@ -73,23 +73,23 @@ public class PaginationDto {
 	}
 	
 	public int getRight() {
-		return Math.min(current + 3, end);
+		return Math.min(current + 3, endPage);
 	}
 	
 	public void setRight(int right) {
 		this.right = right;
 	}
 	
-	public int getEnd() {
-		return end;
+	public int getEndPage() {
+		return endPage;
 	}
 	
-	public void setEnd(int end) {
-		this.end = end;
+	public void setEndPage(int endPage) {
+		this.endPage = endPage;
 	}
 
 	public int getPrev() {
-		return prev - 1;
+		return prev - 2;
 	}
 
 	public void setPrev(int prev) {
@@ -97,7 +97,7 @@ public class PaginationDto {
 	}
 
 	public int getNext() {
-		return next + 1;
+		return next + 2;
 	}
 
 	public void setNext(int next) {

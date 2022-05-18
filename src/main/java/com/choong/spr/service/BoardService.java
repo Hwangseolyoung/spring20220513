@@ -6,8 +6,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.choong.spr.domain.BoardDto;
+import com.choong.spr.domain.Criteria;
 import com.choong.spr.mapper.BoardMapper;
 import com.choong.spr.mapper.ReplyMapper;
 
@@ -52,20 +54,23 @@ public class BoardService {
 	}
 
 
-	public List<BoardDto> listBoardPage(int page, int countPage) {
-		int from = (page -1) * countPage;
-		return mapper.listBoardPage(page, countPage);
-	}
 
 	public int countBoard() {
 		return mapper.countBoard();
 	}
 
-	public List<BoardDto> searchBoard(BoardDto board, String searchKey) {
-		
-		return mapper.selectSearchBoard(board, searchKey);
+	public List<BoardDto> searchBoard(String searchBoard, String searchKey) {
+		System.out.println(searchBoard);
+		System.out.println(searchKey);
+		return mapper.selectSearchBoard(searchBoard, searchKey);
 	}
-
+	
+	// 페이징 처리
+	public List<BoardDto> listBoardPage(int page, int countPage) {
+		int from = (page - 1) * countPage;
+		return mapper.listBoardPage(from, countPage);
+	}
+	
 
 
 }

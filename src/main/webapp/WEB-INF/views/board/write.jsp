@@ -40,14 +40,14 @@
 				</div>
 
 				<div class="form-group shadow-none p-3 mb-5 bg-light rounded">
+					<label class="h5 text-dark">작성자</label>
+					<input name="writer" class="form-control border-success" />
+				</div>
+				
+				<div class="form-group shadow-none p-3 mb-5 bg-light rounded">
 					<label class="h5 text-dark">글 작성</label>
 					<textarea name="body" rows="20" class="form-control border-success"
 						placeholder="본문을 작성해보세요"></textarea>
-				</div>
-
-				<div class="form-group shadow-none p-3 mb-5 bg-light rounded">
-					<label class="h5 text-dark">작성자</label>
-					<input name="writer" class="form-control border-success" />
 				</div>
 
 				<div class="d-flex justify-content-end">
@@ -56,6 +56,10 @@
 
 			</form>
 		</div>
+		
+			<br />
+			<br />
+
 	</div>
 </body>
 </html>

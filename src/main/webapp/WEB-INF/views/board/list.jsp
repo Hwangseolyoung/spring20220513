@@ -21,30 +21,32 @@
 </head>
 <body>
 	<t:navBar path="list" />
-	
-		
-	<div class="container"><h1 class="text-center">게시판 목록</h1></div>
-	
-	<div class="container d-flex flex-row-reverse">
-			<form action="${appRoot }/board/search" method="get">
-				<select name="searchBoard" id="">
-					<option value="title">제목</option>
-					<option value="writer">작성자</option>
-				</select>
-				
-				<input type="text" name="searchKey" placeholder="검색어를 입력하세요">
-				<button class="btn btn-outline-success" type="submit">
-				<i class="fa-solid fa-magnifying-glass"></i>
-				</button>
-				
-			</form>
 
+
+	<div class="container">
+		<h1 class="text-center">FREE BOARD</h1>
 	</div>
 
-
 	<div class="container shadow-none p-3 mb-5 bg-light rounded">
+		<div class="container d-flex flex-row-reverse">
+			<form action="${appRoot }/board/search" method="get">
+				<div class="dropdown">
+				<select class="btn btn-success dropdown-toggle" name="searchBoard" >
+					<option value="title" style="text-align:center">제목</option>
+					<option value="writer" style="text-align:center">작성자</option>
+				</select>
+				<input type="text" name="searchKey" style="height:40px;" placeholder="검색어를 입력하세요">
+				<button class="btn btn-outline-success" type="submit">
+					<i class="fa-solid fa-magnifying-glass"></i>
+				</button>
+				</div>
+
+			</form>
+		</div>
+
+
 		<table class="table table-hover caption-top">
-			<caption>게시물을 선택해보세요</caption>
+			<caption>*총 게시물 : ${pagination.totalRecords }</caption>
 			<thead class="table-light text-center">
 				<tr>
 					<th scope="col">No</th>
@@ -71,8 +73,8 @@
 				</c:forEach>
 			</tbody>
 		</table>
-		
-	<t:pagination path="list" />
+
+		<t:pagination path="list" />
 	</div>
 
 

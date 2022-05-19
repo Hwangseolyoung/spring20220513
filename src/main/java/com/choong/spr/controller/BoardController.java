@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.choong.spr.domain.BoardDto;
-import com.choong.spr.domain.Criteria;
-import com.choong.spr.domain.PageDto;
 import com.choong.spr.domain.PaginationDto;
 import com.choong.spr.domain.ReplyDto;
 import com.choong.spr.service.BoardService;
@@ -30,6 +28,7 @@ public class BoardController {
 	@Autowired
 	private ReplyService replyService;
 	
+	/*
 	// 게시물 list
 	@GetMapping("list")
 	public void listboard(Model model) {
@@ -38,6 +37,7 @@ public class BoardController {
 		model.addAttribute("boardList", list);
 		
 	}
+	*/
 	
 	// 게시물 작성
 	@GetMapping("write")
@@ -61,7 +61,7 @@ public class BoardController {
 		
 	}
 	
-	// 게시물 view
+	// 게시물 + 댓글 list view
 	@GetMapping("get/{id}")
 	public String getBoard(@PathVariable("id") int id, Model model) {
 		BoardDto dto = service.getBoard(id);
@@ -91,8 +91,8 @@ public class BoardController {
 	// 게시물 삭제
 	@PostMapping("remove")
 	public String removeBoard(int id, RedirectAttributes rttr) {
+		System.out.println(id);
 		boolean success = service.removeBoardId(id);
-		
 		if(success) {
 			rttr.addFlashAttribute("message", "삭제되었습니다.");
 		} else {
@@ -114,32 +114,50 @@ public class BoardController {
 	}
 	
 	// 게시물 페이징 처리
-	@GetMapping("page")
+	@GetMapping({"page","list"})
 	public void paginationBoard(@RequestParam(name="page", defaultValue = "1") int page, Model model) {
+		// 화면에 보여지는 게시물 수 
 		int countPage = 20;
 		
 		List<BoardDto> list = service.listBoardPage(page, countPage);
 		
-		// 총 갯수
+		// 현재 페이지
+		int current = page;
+		
+		// 총 갯수 얻기
 		int totalRecords = service.countBoard();
-		int startPage = (page - 1) * 10;
-		int endPage = page + 9;
 		
+		// 페이징 수 10개씩
+		int pageNum = 5;
 		
-		int prev = startPage - 3;
-		int next = startPage + 3;
+		// 마지막 페이지
+		int endPage = (totalRecords - 1) / countPage + 1;
 		
-		PaginationDto pageInfo = new PaginationDto();
-		pageInfo.setCurrent(page);
-		pageInfo.setPageNum(countPage);
-		pageInfo.setstartPage(startPage);
-		pageInfo.setEndPage(endPage);
-		pageInfo.setTotalRecords(totalRecords);
-		pageInfo.setPrev(prev);
-		pageInfo.setNext(next);
+		// 시작 페이지
+		int startPage = endPage - 4;
 		
-		model.addAttribute("board", list);
-		model.addAttribute("pageInfo", pageInfo);
+		int left = (current - 1) / 5 * 5 + 1;
+		
+		int right = left + 4; 
+			right = Math.min(right, endPage);
+		
+		// 양 옆
+		int prev = Math.max(current - 2, 1); //0보다 작으면 안되니까
+		int next = Math.min(current + 2, endPage);
+		
+		PaginationDto pagination = new PaginationDto();
+		pagination.setCurrent(current);
+		pagination.setTotalRecords(totalRecords);
+		pagination.setPageNum(pageNum);
+		pagination.setEndPage(endPage);
+		pagination.setstartPage(page);
+		pagination.setPrev(prev);
+		pagination.setNext(next);
+		pagination.setLeft(left);
+		pagination.setRight(right);
+		
+		model.addAttribute("boardList", list);
+		model.addAttribute("pagination", pagination);
 		
 		
 	}

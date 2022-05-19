@@ -21,7 +21,7 @@ public class ReplyService {
 	}
 
 	public boolean addReply(ReplyDto reply) {
-		reply.setInserted(LocalDateTime.now());
+		// reply.setInserted(LocalDateTime.now());
 		
 		int count = mapper.insertReply(reply);
 		
@@ -32,7 +32,7 @@ public class ReplyService {
 		int count = mapper.updateReply(reply);
 		return count == 1;
 	}
-
+ 
 	public boolean removeReplyId(int id) {
 		int count = mapper.deleteReply(id);
 		return count == 1;

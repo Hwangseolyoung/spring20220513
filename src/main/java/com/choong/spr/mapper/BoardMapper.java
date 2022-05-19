@@ -22,7 +22,7 @@ public interface BoardMapper {
 
 	List<BoardDto> selectSearchBoard(@Param("searchBoard") String searchBoard, @Param("searchKey") String searchKey);
 
-	List<BoardDto> listBoardPage(int from, int countPage);
+	List<BoardDto> listBoardPage(@Param("from") int from, @Param("countPage") int countPage);
 
 	int countBoard();
 

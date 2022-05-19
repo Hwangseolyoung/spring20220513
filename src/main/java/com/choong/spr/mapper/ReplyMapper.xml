@@ -16,19 +16,19 @@
 	</select>
 	
 	<insert id="insertReply">
-		INSERT INTO Reply (board_id, content, inserted)
-		VALUES (#{boardId}, #{content}, #{inserted})
+		INSERT INTO Reply (board_id, content)
+		VALUES (#{boardId}, #{content})
 	</insert>
 	
 	<update id="updateReply">
 		UPDATE Reply
 		SET content = #{content}
-		WHERE id = #{id}
+		WHERE id = #{id }
 	</update>
 	
 	<delete id="deleteReply">
 		DELETE FROM Reply
-		WHERE board_id = #{boardId}
+		WHERE id = #{id}
 	</delete>
 	
 	<delete id="deleteReplyByBoard">

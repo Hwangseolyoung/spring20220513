@@ -24,74 +24,96 @@
 	<t:navBar path="get" />
 
 	<div class="container">
+
 		<div class="row">
-			<form action="${appRoot }/board/modify" method="post">
+			<form id="boardModifyform1" action="${appRoot }/board/modify" method="post">
 				<input type="hidden" name="id" value="${board.id }" />
-				<div class="col-lg-12">
-					<div class="panel-body">
-						<label class="text-dark justify-content-end">글쓴이 : ${board.writer }
-							${board.inserted }</label>
+				<div class="col-lg-12"></div>
+				<div class="panel-body"></div>
+				<label class="text-dark justify-content-end">글쓴이 :
+					${board.writer } ${board.inserted }</label>
 
-						<div class="form-group shadow-none p-3 mb-5 bg-light rounded">
-							<input name="title" class="form-control border-success"
-								value="${board.title }">
-							</input>
-						</div>
+				<div class="form-group shadow-none p-3 mb-5 bg-light rounded">
+					<input name="title" class="form-control border-success"
+						value="${board.title }" />
+				</div>
 
-						<div class="form-group shadow-none p-3 mb-5 bg-light rounded">
-							<textarea name="body" rows="20"
-								class="form-control border-success" value="${board.body }">${board.body }</textarea>
-						</div>
-
-						<button id="modify-submit1" class="btn btn-success">수정</button>
+				<div class="form-group shadow-none p-3 mb-5 bg-light rounded">
+					<textarea name="body" rows="20" class="form-control border-success"
+						value="${board.body }">${board.body }</textarea>
+				</div>
 			</form>
-	
-			<form action="${appRoot }/board/remove" method="post">
+
+			<form id="boardRemoveform2" action="${appRoot }/board/remove" method="post">
 				<input type="hidden" name="id" value="${board.id }" />
-				<button id="remove-submit1" class="btn btn-success">삭제</button>
 			</form>
 		</div>
+		
+		<div class="d-flex flex-row-reverse">
+			<button form="boardRemoveform2" type="submit" id="remove-submit1"
+				class="btn btn-danger " style="margin-left:10px">삭제</button>
+			<button form="boardModifyform1" type="submit" id="modify-submit1"
+				class="btn btn-success ">수정</button> 
+		</div>
 
-			<hr />
+		<hr />
 
-
-	<%-- 댓글 추가 form --%>
-	<!-- .container.mt-3>.row>.col>form -->
-	<div class="container mt-3">
-		<div class="row">
-			<div class="col">
-				<form action="${appRoot }/board/reply/insert" method="post">
-					<div class="input-group">
-						<input type="hidden" name="boardId" value="${board.id }" />
-						<input class="form-control" type="text" name="content" required />
-						<button class="btn btn-outline-secondary">
-							<i class="fa-solid fa-comment-dots"></i>
-						</button>
-					</div>
-				</form>
+		<%-- 댓글 추가 form --%>
+		<!-- .container.mt-3>.row>.col>form -->
+		<div class="container mt-3">
+			<div class="row">
+				<div class="col">
+					<form action="${appRoot }/board/reply/insert" method="post">
+						<div class="input-group">
+							<input type="hidden" name="boardId" value="${board.id }" />
+							<input class="form-control" type="text" name="content" required 
+								placeholder="댓글을 작성해보세요~"/>
+							<button class="btn btn-outline-secondary">
+								<i class="fa-solid fa-comment-dots"></i>
+							</button>
+						</div>
+					</form>
+				</div>
 			</div>
 		</div>
-	</div>
 
-	<c:forEach items="${replyList }" var="reply">
-		<div class="d-flex justify-content-center mb-3">
-			${reply.inserted } :
+		<br>
+		
 
-			<input type="text" class="form-control" name="content" id="input1"
-				value="${reply.content }" />
+		<div class="justify-content-center mb-3">
+			<c:forEach items="${replyList }" var="reply">
+		
+				${reply.inserted } :
+
+				<!-- reply 수정 & 삭제 form -->
+				<div id="replyButton">
+					<form id="replyModifyform1" action="${appRoot }/board/reply/modify"
+						method="post">
+						<input type="hidden" name="id" value="${reply.id }" />
+						<input type="hidden" name="boardId" value="${reply.boardId }" />
+						${reply.content }"
+					</form>
+
+					<form id="replyDeleteForm1" action="${appRoot }/board/reply/remove"
+						method="post">
+						<input type="hidden" name="id" value="${reply.id }" />
+						<input type="hidden" name="boardId" value="${board.id }" />
+					</form>
+					
+					<div>
+						<button form="replyModifyform1"  id="replyModify" style="margin-left:10px">수정</button>
+						<button form="replyDeleteForm1" id="replyDelete">삭제</button>
+					</div>
+					
+					<div class="text-success">
+ 						 <hr>
+					</div>
+				</div>
+
+			</c:forEach>
+
 		</div>
-	</c:forEach>
 
-	<!-- reply 삭제 form -->
-	<div class="d-none">
-		<form id="replyDeleteForm1" action="${appRoot }/board/reply/remove"
-			method="post">
-			<input id="replyDeleteInput1" type="text" name="id" />
-			<input type="text" name="boardId" value="${board.id }" />
-		</form>
-
-	</div>
-	</div>
 	</div>
 </body>
 </html>

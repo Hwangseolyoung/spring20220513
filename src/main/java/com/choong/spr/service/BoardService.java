@@ -33,7 +33,7 @@ public class BoardService {
 	}
 
 	public boolean addBoard(BoardDto board) {
-		board.setInserted(LocalDateTime.now());
+		// board.setInserted(LocalDateTime.now());
 		
 		int count = mapper.insertBoard(board);
 		return count == 1;
@@ -46,9 +46,10 @@ public class BoardService {
 	
 	@Transactional
 	public boolean removeBoardId(int id) {
+		replyMapper.deleteReplyByBoard(id);
+		
 		int count = mapper.deleteBoard(id);
 		
-		replyMapper.deleteReplyByBoard(id);
 		
 		return count == 1;
 	}
@@ -67,7 +68,8 @@ public class BoardService {
 	
 	// 페이징 처리
 	public List<BoardDto> listBoardPage(int page, int countPage) {
-		int from = (page - 1) * countPage;
+		// ~부터 어디까지 보여줄건지 쿼리에 넘겨주기
+		int from = (page -1) * countPage;
 		return mapper.listBoardPage(from, countPage);
 	}
 	

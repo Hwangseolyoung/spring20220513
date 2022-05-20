@@ -21,7 +21,7 @@
 </head>
 <body>
 	<t:navBar path="write" />
-
+  
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-12">
